@@ -19,10 +19,32 @@ def get_data(path):
 
 def parse_data(path):
     data = get_data(path)
-    stats = build_statistic_header(data, path)
+    headers, raw_path = build_statistic_header(data, path)
+    int_headers = ['first_name', 'second_name', 'id', 'web_name', 'now_cost', 'cost_change_start', 'element_type',
+                   'selected_by_percent', 'team', 'team_code', 'total_points', 'minutes', 'goals_scored', 'assists',
+                   'clean_sheets', 'goals_conceded', 'yellow_cards', 'red_cards', 'saves', 'bonus', 'bps']
+    clp = clean_data(raw_path, path + 'clean_player_data.csv', int_headers)
+    return headers, raw_path, clp
 
+def clean_data(raw_path, clean_path, headers_of_interest):
+    """
+    This cleaner should be able to be used as a generic cleaner, not only for player data but also gw etc.
+    """
+    raw_file = open(raw_path, 'r+', encoding='utf-8')
+    r = csv.DictReader(raw_file)
+
+    with open(clean_path, 'w+', encoding='utf8', newline='') as file:
+        w = csv.DictWriter(file, headers_of_interest, extrasaction='ignore')
+        w.writeheader()
+        for line in r:
+            w.writerow(line)
+    return clean_path
 
 def build_statistic_header(statistics_dict_full, path):
+    """
+    Right now, the passed stats_dict is assumed to be player data. To make this more generic/general, remove "elements"
+    and pass the type (elements/events...) as an argument to the function and this could clean all data.
+    """
     # Empty variable to fill
     statistics_dict = statistics_dict_full["elements"][0]
     headers = []
@@ -32,26 +54,19 @@ def build_statistic_header(statistics_dict_full, path):
         headers += [key]
 
     # Save all headers into a .csv file
-    with open(path + 'raw_player_data.csv', 'w+', encoding='utf8', newline='') as file:
+    raw_path = path + 'raw_player_data.csv'
+    with open(raw_path, 'w+', encoding='utf8', newline='') as file:
         w = csv.DictWriter(file, sorted(headers))
         w.writeheader()
         for player in statistics_dict_full["elements"]:
             w.writerow({k:str(v).encode('utf-8').decode('utf-8') for k, v in player.items()})
-    return headers
+    return headers, raw_path
 
-    # stat_names = extract_stat_names(list_of_players[0])
-    # filename = base_filename + 'players_raw.csv'
-    # os.makedirs(os.path.dirname(filename), exist_ok=True)
-    # f = open(filename, 'w+', encoding='utf8', newline='')
-    # w = csv.DictWriter(f, sorted(stat_names))
-    # w.writeheader()
-    # for player in list_of_players:
-    #         w.writerow({k:str(v).encode('utf-8').decode('utf-8') for k, v in player.items()})
 
 if __name__ == '__main__':
     data_path = 'C:/Users/elias/mainFolder/fantasy-premier-league/data/'
-    parse_data(data_path)
-    # path = str(os.path.dirname(os.path.abspath(__file__))) + '/data/'
-    # data = get_data()
-    # with open(path + 'allDataRaw.json', 'w') as out:
-    #     json.dump(data, out)
+    h, p, clp = parse_data(data_path)
+
+    # test_data = data_path + 'raw_player_data.csv'
+    # header, raw_path = build_statistic_header('C:/Users/elias/mainFolder/fantasy-premier-league/data/allDataRaw.json', test_data)
+    # print(header)
