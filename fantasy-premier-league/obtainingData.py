@@ -1,18 +1,25 @@
 import requests
 import json
-import os
+import time
 import csv
 
 
-def get_data(path):
-    """ Retrieve the fpl player stats
+def get_data(path, url, name_dump):
+    """ Retrieve fpl stats from url
+    Save in path with name_dump
     """
-    response = requests.get("https://fantasy.premierleague.com/api/bootstrap-static/")
+    #response = requests.get("https://fantasy.premierleague.com/api/bootstrap-static/")
+    response = ''
+    while response == '':
+        try:
+            response = requests.get(url)
+        except:
+            time.sleep(5)
     if response.status_code != 200:
         raise Exception("Response was code " + str(response.status_code))
     response_text = response.text
     data = json.loads(response_text)
-    with open(path + 'allDataRaw.json', 'w') as out:
+    with open(path + name_dump + '.json', 'w') as out:
         json.dump(data, out)
     return data
 
@@ -64,6 +71,10 @@ def build_statistic_header(statistics_dict_full, path):
 
 
 if __name__ == '__main__':
+    url_all_players = "https://fantasy.premierleague.com/api/bootstrap-static/"
+    url_specific_player = "https://fantasy.premierleague.com/api/element-summary/"  # needs + str(player_id)
+    url_team = "https://fantasy.premierleague.com/api/entry/"   # + str(entry_id) could be team (Arsenal) or my own team?
+
     data_path = 'C:/Users/elias/mainFolder/fantasy-premier-league/data/'
     h, p, clp = parse_data(data_path)
 
