@@ -2,6 +2,7 @@ import requests
 import json
 import time
 import csv
+import pandas
 
 
 def get_data(path, url, name_dump):
@@ -89,15 +90,28 @@ if __name__ == '__main__':
     player_headers = ['first_name', 'second_name', 'id', 'web_name', 'now_cost', 'cost_change_start', 'element_type',
                    'selected_by_percent', 'team', 'team_code', 'total_points', 'minutes', 'goals_scored', 'assists',
                    'clean_sheets', 'goals_conceded', 'yellow_cards', 'red_cards', 'saves', 'bonus', 'bps']
-    team_headers = ['code', 'draw', 'form', 'id', 'loss', 'name', 'played', 'points', 'position', 'short_name',
-                    'strength', 'team_division', 'unavailable', 'win', 'strength_overall_home', 'strength_overall_away',
-                    'strength_attack_home', 'strength_attack_away', 'strength_defence_home', 'strength_defence_away']
+    team_headers = ['code', 'id', 'name', 'short_name', 'strength', 'team_division', 'strength_overall_home',
+                    'strength_overall_away', 'strength_attack_home', 'strength_attack_away', 'strength_defence_home',
+                    'strength_defence_away']
+    position_headers = ['id', 'plural_name', 'plural_name_short', 'singular_name', 'singular_name_short',
+                        'squad_select', 'squad_min_play', 'squad_max_play']
+    gameweek_headers = ['id', 'name', 'deadline_time', 'average_entry_score', 'finished', 'data_checked',
+                        'highest_scoring_entry', 'deadline_time_epoch', 'deadline_time_game_offset', 'highest_score',
+                        'is_previous', 'is_current', 'is_next', 'chip_plays', 'most_selected', 'most_transferred_in',
+                        'top_element', 'top_element_info', 'transfers_made', 'most_captained', 'most_vice_captained']
     type_players = "elements"   # players
     type_teams = "teams"    # teams
     type_positions = "element_types"    # position specifications for FPL
     type_gw = "events"  # gw summary (light)
 
-    header, raw_datapath, clp = parse_data(data_path, url_all_players, 'players', player_headers, type_players)
-    print('headers:', header, '\nRaw Path:', raw_datapath, '\nCleanPath:', clp, '\n')
-    header, raw_datapath, clp = parse_data(data_path, url_all_players, 'teams', team_headers, type_teams)
-    print('headers:', header, '\nRaw Path:', raw_datapath, '\nCleanPath:', clp, '\n')
+    parse_data(data_path, url_all_players, 'players', player_headers, type_players)
+    parse_data(data_path, url_all_players, 'teams', team_headers, type_teams)
+    parse_data(data_path, url_all_players, 'positions', position_headers, type_positions)
+    parse_data(data_path, url_all_players, 'gameweeks', gameweek_headers, type_gw)
+
+
+    df_players = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_players.csv')
+    df_teams = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_teams.csv')
+    df_positions = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_positions.csv')
+    df_gameweeks = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_gameweeks.csv')
+    print('')

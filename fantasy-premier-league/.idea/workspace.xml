@@ -30,10 +30,16 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
-  <component name="RunManager" selected="Python.obtainingData">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\elias" />
+      <recent name="C:\" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.players_calculations">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="fantasy-premier-league" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -97,12 +103,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="players_calculations" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="fantasy-premier-league" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\elias\AppData\Local\Programs\Python\Python36\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/players_calculations.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.fantasy-premier-league" />
       <item itemvalue="Python.obtainingData" />
+      <item itemvalue="Python.players_calculations" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.players_calculations" />
         <item itemvalue="Python.obtainingData" />
       </list>
     </recent_temporary>
@@ -146,68 +175,73 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="163" y="49" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1576178978746" />
-    <state x="60" y="165" key="#xdebugger.XInspectDialog" timestamp="1577121485387">
+    <state x="304" y="126" width="738" height="494" key="#xdebugger.XInspectDialog" timestamp="1577267627690">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="60" y="165" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1577121485387" />
-    <state x="653" y="115" width="562" height="594" key="#xdebugger.evaluate" timestamp="1577121472230">
+    <state x="304" y="126" width="738" height="494" key="#xdebugger.XInspectDialog/0.0.1536.824@0.0.1536.824" timestamp="1577267627690" />
+    <state x="659" y="143" width="562" height="594" key="#xdebugger.evaluate" timestamp="1577266617680">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="653" y="115" width="562" height="594" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1577121472230" />
-    <state x="548" y="167" key="FileChooserDialogImpl" timestamp="1576317239992">
+    <state x="659" y="143" width="562" height="594" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1577266617680" />
+    <state width="1534" height="440" key="DebuggerActiveHint" timestamp="1577265809160">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="548" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1576317239992" />
-    <state width="1515" height="216" key="GridCell.Tab.0.bottom" timestamp="1577121531626">
+    <state width="1534" height="440" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1577265809160" />
+    <state x="548" y="167" key="FileChooserDialogImpl" timestamp="1577122353213">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="216" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1577121531626" />
-    <state width="1515" height="216" key="GridCell.Tab.0.center" timestamp="1577121531626">
+    <state x="548" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1577122353213" />
+    <state width="1515" height="289" key="GridCell.Tab.0.bottom" timestamp="1577267983577">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="216" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1577121531626" />
-    <state width="1515" height="216" key="GridCell.Tab.0.left" timestamp="1577121531624">
+    <state width="1515" height="289" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1577267983577" />
+    <state width="1515" height="289" key="GridCell.Tab.0.center" timestamp="1577267983577">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="216" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1577121531624" />
-    <state width="1515" height="216" key="GridCell.Tab.0.right" timestamp="1577121531626">
+    <state width="1515" height="289" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1577267983577" />
+    <state width="1515" height="289" key="GridCell.Tab.0.left" timestamp="1577267983577">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="216" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1577121531626" />
-    <state width="1515" height="216" key="GridCell.Tab.1.bottom" timestamp="1577121531627">
+    <state width="1515" height="289" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1577267983577" />
+    <state width="1515" height="289" key="GridCell.Tab.0.right" timestamp="1577267983577">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="216" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1577121531627" />
-    <state width="1515" height="216" key="GridCell.Tab.1.center" timestamp="1577121531627">
+    <state width="1515" height="289" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1577267983577" />
+    <state width="1515" height="289" key="GridCell.Tab.1.bottom" timestamp="1577267983577">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="216" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1577121531627" />
-    <state width="1515" height="216" key="GridCell.Tab.1.left" timestamp="1577121531626">
+    <state width="1515" height="289" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1577267983577" />
+    <state width="1515" height="289" key="GridCell.Tab.1.center" timestamp="1577267983577">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="216" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1577121531626" />
-    <state width="1515" height="216" key="GridCell.Tab.1.right" timestamp="1577121531627">
+    <state width="1515" height="289" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1577267983577" />
+    <state width="1515" height="289" key="GridCell.Tab.1.left" timestamp="1577267983577">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="216" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1577121531627" />
+    <state width="1515" height="289" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1577267983577" />
+    <state width="1515" height="289" key="GridCell.Tab.1.right" timestamp="1577267983577">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="289" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1577267983577" />
     <state x="98" y="77" key="SettingsEditor" timestamp="1576317484662">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="98" y="77" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1576317484662" />
-    <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1577121485293">
+    <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1577265529593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1577121485293" />
+    <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1577265529593" />
     <state x="462" y="17" width="611" height="789" key="find.popup" timestamp="1576181967409">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="462" y="17" width="611" height="789" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1576181967409" />
-  </component>
-  <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="csv.DictReader(clp).restkey" language="Python" />
-      </configuration>
-    </watches-manager>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1577263304168">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1577263304168" />
+    <state x="491" y="324" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1577122334851">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="491" y="324" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.1536.824@0.0.1536.824" timestamp="1577122334851" />
   </component>
 </project>
