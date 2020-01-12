@@ -87,6 +87,7 @@ if __name__ == '__main__':
     url_fixtures = "https://fantasy.premierleague.com/api/fixtures/"    # all fixtures
 
     data_path = 'C:/Users/elias/mainFolder/fantasy-premier-league/data/'
+    # TODO: Add position to player headers????
     player_headers = ['first_name', 'second_name', 'id', 'web_name', 'now_cost', 'cost_change_start', 'element_type',
                    'selected_by_percent', 'team', 'team_code', 'total_points', 'minutes', 'goals_scored', 'assists',
                    'clean_sheets', 'goals_conceded', 'yellow_cards', 'red_cards', 'saves', 'bonus', 'bps']
