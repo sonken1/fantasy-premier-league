@@ -45,11 +45,18 @@ def sort_top_players(data_path, by_type, number_of_top=10, limit=None, limit_typ
 
     return top_list
 
+def expeted_points(player_id, data_path):
+
+    dataframe = pandas.read_csv(data_path)
+    dataframe = dataframe[dataframe['id'] == player_id]
+    print('')
+
+
 
 if __name__ == '__main__':
     path = 'C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_players.csv'
     new_headers, new_path = add_player_information(path)
-    efficient = sort_top_players(new_path, 'points_per_minute', 10, 90, 'minutes')
+    efficient = sort_top_players(new_path, 'points_per_minute', 10, 300, 'minutes')
     price = sort_top_players(new_path, 'points_per_million')
     inflation = sort_top_players(new_path, 'cost_change_start')
     neg_inflation = sort_top_players(new_path, 'cost_change_start', ascending_sort=True)
@@ -68,4 +75,5 @@ if __name__ == '__main__':
     print("Worst players by BPS, that has played more than 300 minutes, (top 10):")
     print(worst_bonus_point_system)
 
+    expeted_points(166, new_path) # 166 = Jamie Vardy
     # print("Headers in DataFrame: ", new_headers)

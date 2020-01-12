@@ -29,9 +29,6 @@ def get_data(path, url, name_dump):
 def parse_data(path, url, name_dump, headers_of_interest, types=''):
     data = get_data(path, url, name_dump)
     headers, raw_path = build_statistic_header(data, path + 'raw_' + name_dump + '.csv', types)
-    # int_headers = ['first_name', 'second_name', 'id', 'web_name', 'now_cost', 'cost_change_start', 'element_type',
-    #                'selected_by_percent', 'team', 'team_code', 'total_points', 'minutes', 'goals_scored', 'assists',
-    #                'clean_sheets', 'goals_conceded', 'yellow_cards', 'red_cards', 'saves', 'bonus', 'bps']
     clean_path = clean_data(raw_path, path + 'cleaned_' + name_dump + '.csv', headers_of_interest)
     return headers, raw_path, clean_path
 
@@ -87,7 +84,7 @@ if __name__ == '__main__':
     url_fixtures = "https://fantasy.premierleague.com/api/fixtures/"    # all fixtures
 
     data_path = 'C:/Users/elias/mainFolder/fantasy-premier-league/data/'
-    # TODO: Add position to player headers????
+    # TODO: Add position to player headers???? - 'element_type' is position
     player_headers = ['first_name', 'second_name', 'id', 'web_name', 'now_cost', 'cost_change_start', 'element_type',
                    'selected_by_percent', 'team', 'team_code', 'total_points', 'minutes', 'goals_scored', 'assists',
                    'clean_sheets', 'goals_conceded', 'yellow_cards', 'red_cards', 'saves', 'bonus', 'bps']
@@ -100,19 +97,27 @@ if __name__ == '__main__':
                         'highest_scoring_entry', 'deadline_time_epoch', 'deadline_time_game_offset', 'highest_score',
                         'is_previous', 'is_current', 'is_next', 'chip_plays', 'most_selected', 'most_transferred_in',
                         'top_element', 'top_element_info', 'transfers_made', 'most_captained', 'most_vice_captained']
+    history_headers = ['element', 'fixture', 'opponent_team', 'total_points', 'was_home', 'kickoff_time',
+                        'team_h_score', 'team_a_score', 'round', 'minutes', 'goals_scored', 'assists', 'clean_sheets',
+                        'goals_conceded', 'own_goals', 'penalties_saved', 'penalties_missed', 'yellow_cards',
+                        'red_cards', 'saves', 'bonus', 'bps', 'influence', 'creativity', 'threat', 'ict_index', 'value',
+                        'transfers_balance', 'selected', 'transfers_in', 'transfers_out']
     type_players = "elements"   # players
+    type_history = "history"    # player performance per week
+    type_past_seasons = "history_past"  # player performance previous seasons
     type_teams = "teams"    # teams
     type_positions = "element_types"    # position specifications for FPL
     type_gw = "events"  # gw summary (light)
 
-    parse_data(data_path, url_all_players, 'players', player_headers, type_players)
-    parse_data(data_path, url_all_players, 'teams', team_headers, type_teams)
-    parse_data(data_path, url_all_players, 'positions', position_headers, type_positions)
-    parse_data(data_path, url_all_players, 'gameweeks', gameweek_headers, type_gw)
-
+    # parse_data(data_path, url_all_players, 'players', player_headers, type_players)
+    # parse_data(data_path, url_all_players, 'teams', team_headers, type_teams)
+    # parse_data(data_path, url_all_players, 'positions', position_headers, type_positions)
+    # parse_data(data_path, url_all_players, 'gameweeks', gameweek_headers, type_gw)
+    parse_data(data_path, url_specific_player + '/166/', 'player_history_Vardy', history_headers, type_history) #166 for Jamie Vardy
 
     df_players = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_players.csv')
     df_teams = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_teams.csv')
     df_positions = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_positions.csv')
     df_gameweeks = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_gameweeks.csv')
+    df_JamieVardy = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_player_history_Vardy.csv')
     print('')
