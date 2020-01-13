@@ -10,7 +10,6 @@ def get_data(path, url, name_dump):
     Retrieve fpl stats from url
     Save in path with name_dump
     """
-    #response = requests.get("https://fantasy.premierleague.com/api/bootstrap-static/")
     response = ''
     while response == '':
         try:
@@ -109,10 +108,10 @@ if __name__ == '__main__':
     type_positions = "element_types"    # position specifications for FPL
     type_gw = "events"  # gw summary (light)
 
-    # parse_data(data_path, url_all_players, 'players', player_headers, type_players)
-    # parse_data(data_path, url_all_players, 'teams', team_headers, type_teams)
-    # parse_data(data_path, url_all_players, 'positions', position_headers, type_positions)
-    # parse_data(data_path, url_all_players, 'gameweeks', gameweek_headers, type_gw)
+    parse_data(data_path, url_all_players, 'players', player_headers, type_players)
+    parse_data(data_path, url_all_players, 'teams', team_headers, type_teams)
+    parse_data(data_path, url_all_players, 'positions', position_headers, type_positions)
+    parse_data(data_path, url_all_players, 'gameweeks', gameweek_headers, type_gw)
     parse_data(data_path, url_specific_player + '/166/', 'player_history_Vardy', history_headers, type_history) #166 for Jamie Vardy
 
     df_players = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_players.csv')

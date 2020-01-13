@@ -18,10 +18,9 @@ def add_player_information(data_path):
     df_players['points_per_million'] = df_players['total_points'].div(df_players['now_cost'])
     df_players['points_per_minute'] = df_players['total_points'].div(df_players['minutes'])
     df_players['full_name'] = df_players['first_name'] + ' ' + df_players['second_name']
-    headers = list(df_players)
     new_path_name = data_path.strip(data_path.split('/')[-1]) + 'cleaned_additional_players.csv'
     df_players.to_csv(new_path_name)
-    return headers, new_path_name
+    return new_path_name
 
 
 def sort_top_players(data_path, by_type, number_of_top=10, limit=None, limit_type=None, ascending_sort=False):
