@@ -42,37 +42,47 @@ class GatherData:
         # Call initial method, gather and process first data
         self.gather_and_update_data()
 
-
     def gather_and_update_data(self):
-        headers, raw_path, clean_path = obtainingData.parse_data(self.base_data_path, self.base_url, 'players',
-                                                                 self.player_headers, self.type_players)
+        print('Downloading player data ...')
+        try:
+            os.mkdir(self.base_data_path + 'players/')
+        except FileExistsError:
+            pass
+        headers, raw_path, clean_path = obtainingData.parse_data(self.base_data_path + 'players/', self.base_url,
+                                                                 'players', self.player_headers, self.type_players)
         new_path_name = players_calculations.add_player_information(clean_path)
 
         dataframe = pd.read_csv(new_path_name)
 
         size = dataframe.shape[0]
         counter = 1
-        toolbar_width = 100
-        sys.stdout.write("[%s]" % (" " * toolbar_width))
-        sys.stdout.flush()
-        sys.stdout.write("\b" * (toolbar_width + 1))
+        print('Processing player data ...')
         for fname, lname, ident in zip(dataframe['first_name'], dataframe['second_name'], dataframe['id']):
-            sys.stdout.write(str(counter/size*100) + '%')
+
+            sys.stdout.write("\r{0}".format(str((float(counter) / size) * 100)+' %'))
             sys.stdout.flush()
             map_name = str(ident) + '_' + fname + '_' + lname + '/'
 
             try:
-                os.mkdir(self.base_data_path + map_name)
+                os.mkdir(self.base_data_path + 'players/' + map_name)
             except FileExistsError:
                 pass
 
-            obtainingData.parse_data(self.base_data_path + map_name, self.url_specific_player + str(ident) + '/',
+            try:
+                obtainingData.parse_data(self.base_data_path + map_name, self.url_specific_player + str(ident) + '/',
                                      'player_history', self.player_history_headers, self.type_history)
+            except UnboundLocalError:
+                print('\nNew Player Added to premier league:', fname + ' ' + lname)
+                pass
             counter += 1
-            # data = obtainingData.get_data(self.base_data_path + map_name, self.url_specific_player + str(ident) + '/',
-            #                               str(ident) + '_' + fname + '_' + lname)
-            # headers, raw_path = obtainingData.build_statistic_header(data, self.base_data_path + map_name + 'gw' +
-            #                                                          '.csv', self.type_players)
+
+        print('\nDownloading team data ...')
+        try:
+            os.mkdir(self.base_data_path + 'teams/')
+        except FileExistsError:
+            pass
+        headers, raw_path, clean_path = obtainingData.parse_data(self.base_data_path + 'teams/', self.base_url, 'teams',
+                                                                 self.team_headers, self.type_teams)
 
 
 

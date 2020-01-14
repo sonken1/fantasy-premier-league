@@ -38,7 +38,10 @@ def build_statistic_header(statistics_dict_full, path, entry_type):
     and pass the type (elements/events/teams...) as an argument to the function and this could clean all data.
     """
     # Empty variable to fill
-    statistics_dict = statistics_dict_full[entry_type][0]
+    try:
+        statistics_dict = statistics_dict_full[entry_type][0]
+    except IndexError:
+        pass
     headers = []
 
     # Save all keys into one massive header

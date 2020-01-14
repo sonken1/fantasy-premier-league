@@ -1,8 +1,0 @@
-element,fixture,opponent_team,total_points,was_home,kickoff_time,team_h_score,team_a_score,round,minutes,goals_scored,assists,clean_sheets,goals_conceded,own_goals,penalties_saved,penalties_missed,yellow_cards,red_cards,saves,bonus,bps,influence,creativity,threat,ict_index,value,transfers_balance,selected,transfers_in,transfers_out
-572,158,17,0,False,2019-12-07T15:00:00Z,5,0,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,40,0,0,0,0
-572,162,13,0,True,2019-12-14T15:00:00Z,1,0,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,40,310,675,354,44
-572,172,3,0,False,2019-12-21T15:00:00Z,0,1,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,40,101,1148,205,104
-572,185,8,0,False,2019-12-26T15:00:00Z,1,0,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,40,79,1294,171,92
-572,193,12,0,True,2019-12-28T19:45:00Z,0,2,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,40,25,1460,118,93
-572,203,2,0,True,2020-01-01T12:30:00Z,1,2,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,40,13,1630,161,148
-572,213,6,0,False,2020-01-11T15:00:00Z,3,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,40,81,1902,333,252
