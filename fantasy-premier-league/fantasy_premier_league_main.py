@@ -24,7 +24,7 @@ class GatherData:
 
         # If folder already exists, don't create it again
         try:
-            os.mkdir(self.base_data_path)
+            os.makedirs(self.base_data_path)
         except FileExistsError:
             pass
 
@@ -146,6 +146,8 @@ class GatherData:
 
 id = 3022773
 e = GatherData(id)
+
+# Dumb shiet
 my_team_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/my_team/Spurtastic/raw_my_team_history.csv')
 gw_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/gameweeks/cleaned_gameweeks.csv')
 
@@ -160,9 +162,7 @@ mawp = [np.mean(mtp)]*nbr_gw
 
 plt.plot(mtp)
 plt.plot(gwp)
-# plt.plot(mawp)
-# plt.plot(awp)
-plt.legend(['My Team', 'All Average Points, week-by-week'])#, 'My average', 'All Average Points'])
+plt.legend(['My Team', 'All Average Points, week-by-week'])
 plt.xlabel('Gameweek')
 plt.ylabel('Points')
 plt.show()
