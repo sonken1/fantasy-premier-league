@@ -5,17 +5,23 @@ import pathlib
 import pandas as pd
 import time
 import sys
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class GatherData:
 
-    def __init__(self):
+    def __init__(self, my_team_id):
 
         self.this_season = '2019-20'
+        self.my_team_id = str(my_team_id)
+        self.my_team_url = "https://fantasy.premierleague.com/api/entry/" + self.my_team_id + '/'
         self.base_path = str(pathlib.Path(__file__).parent.absolute()).replace('\\', '/') + '/'
         self.base_data_path = self.base_path + 'data/' + self.this_season + '/'
         self.base_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
         self.url_specific_player = "https://fantasy.premierleague.com/api/element-summary/"
+
+
         # If folder already exists, don't create it again
         try:
             os.mkdir(self.base_data_path)
@@ -35,70 +41,128 @@ class GatherData:
                                        'penalties_saved', 'penalties_missed', 'yellow_cards', 'red_cards', 'saves',
                                        'bonus', 'bps', 'influence', 'creativity', 'threat', 'ict_index', 'value',
                                        'transfers_balance', 'selected', 'transfers_in', 'transfers_out']
+        self.gameweek_headers = ['id', 'name', 'deadline_time', 'average_entry_score', 'finished', 'data_checked',
+                                 'highest_scoring_entry', 'deadline_time_epoch', 'deadline_time_game_offset',
+                                 'highest_score', 'is_previous', 'is_current', 'is_next', 'chip_plays', 'most_selected',
+                                 'most_transferred_in', 'top_element', 'top_element_info', 'transfers_made',
+                                 'most_captained', 'most_vice_captained']
         self.type_players = "elements"  # players
         self.type_teams = "teams"  # teams
         self.type_history = "history"
+        self.type_gameweeks = "events"
 
         # Call initial method, gather and process first data
         self.gather_and_update_data()
 
     def gather_and_update_data(self):
-        print('Downloading player data ...')
+        # Set base paths
+        players_path = self.base_data_path + 'players/'
+        teams_path = self.base_data_path + 'teams/'
+        gameweek_path = self.base_data_path + 'gameweeks/'
+        own_path = self.base_data_path + 'my_team/'
+
+        print('Creating folders and subfolders ...')
+
+        # Make directories if not already existing
         try:
-            os.mkdir(self.base_data_path + 'players/')
+            os.mkdir(gameweek_path)  # For gameweeks
         except FileExistsError:
             pass
-        headers, raw_path, clean_path = obtainingData.parse_data(self.base_data_path + 'players/', self.base_url,
-                                                                 'players', self.player_headers, self.type_players)
+
+        try:
+            os.mkdir(players_path)  # For players
+        except FileExistsError:
+            pass
+
+        try:
+            os.mkdir(teams_path)    # For teams
+        except FileExistsError:
+            pass
+
+        print('\nDownloading gameweek data ...')
+        headers, raw_path, clean_path = obtainingData.parse_data(gameweek_path, self.base_url, 'gameweeks',
+                                                                 self.gameweek_headers, self.type_gameweeks)
+
+        print('\nDownloading player data ...')
+        # Gather the initial player data, light version and minor processing. Adding stuff
+        headers, raw_path, clean_path = obtainingData.parse_data(players_path, self.base_url, 'players',
+                                                                 self.player_headers, self.type_players)
         new_path_name = players_calculations.add_player_information(clean_path)
 
+        # Load as dataframe for easy handling
         dataframe = pd.read_csv(new_path_name)
 
-        size = dataframe.shape[0]
+
+        # Counters for visualization
+        number_of_players = dataframe.shape[0]
         counter = 1
-        print('Processing player data ...')
+        new_players_added = []
+
+        print('\nProcessing player data ...')
         for fname, lname, ident in zip(dataframe['first_name'], dataframe['second_name'], dataframe['id']):
 
-            sys.stdout.write("\r{0}".format(str((float(counter) / size) * 100)+' %'))
+            # Write how many players have been processed
+            sys.stdout.write("\r{0}".format(str((float(counter) / number_of_players) * 100)+' %'))
             sys.stdout.flush()
+
+            # Name of folder to create
             map_name = str(ident) + '_' + fname + '_' + lname + '/'
 
+            # Create individual player's directory if not already existing
             try:
-                os.mkdir(self.base_data_path + 'players/' + map_name)
+                os.mkdir(players_path + map_name)
             except FileExistsError:
                 pass
 
+            # Obtain and parse + clean player data
             try:
-                obtainingData.parse_data(self.base_data_path + map_name, self.url_specific_player + str(ident) + '/',
-                                     'player_history', self.player_history_headers, self.type_history)
+                obtainingData.parse_data(players_path + map_name, self.url_specific_player + str(ident) + '/',
+                                         'player_history', self.player_history_headers, self.type_history)
+            # If player is newly bought (has no history data for this season) methods will throw error. Catch here:
             except UnboundLocalError:
-                print('\nNew Player Added to premier league:', fname + ' ' + lname)
+                new_players_added.append(fname + ' ' + lname)
                 pass
             counter += 1
 
+        print('\nNew Players added to premier league (has not played yet this season):')
+        for new_plp in new_players_added:
+            print(new_plp)
+
         print('\nDownloading team data ...')
+        # Gather the initial teams data, light version and minor processing.
+        obtainingData.parse_data(teams_path, self.base_url, 'teams', self.team_headers, self.type_teams)
+        #
+        print('\nDownloading your team data ...')
+        data = obtainingData.get_data(own_path, self.my_team_url, 'my_team', False)
+        team_name = data['name']
         try:
-            os.mkdir(self.base_data_path + 'teams/')
+            os.makedirs(own_path + team_name)    # For teams
         except FileExistsError:
             pass
-        headers, raw_path, clean_path = obtainingData.parse_data(self.base_data_path + 'teams/', self.base_url, 'teams',
-                                                                 self.team_headers, self.type_teams)
+        data = obtainingData.get_data(own_path + team_name + '/', self.my_team_url + 'history/', 'my_team_history')
+
+        headers, path = obtainingData.build_statistic_header(data, own_path + team_name + '/' + 'raw_my_team_history' + '.csv', 'current')
 
 
+id = 3022773
+e = GatherData(id)
+my_team_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/my_team/Spurtastic/raw_my_team_history.csv')
+gw_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/gameweeks/cleaned_gameweeks.csv')
 
+mtp = my_team_data['points']
+nbr_gw = len(mtp)
+gwp = gw_data['average_entry_score']
+maxgw = gw_data['highest_score']
+gwp = gwp[:nbr_gw]
+maxgw = maxgw[:nbr_gw]
+awp = [np.mean(gwp)]*nbr_gw
+mawp = [np.mean(mtp)]*nbr_gw
 
-
-
-
-e = GatherData()
-
-# # urls:
-#     url_all_players = "https://fantasy.premierleague.com/api/bootstrap-static/"
-#     # All players but also teams, elements and gameweeks
-#     url_specific_player_base = "https://fantasy.premierleague.com/api/element-summary/"  # needs + str(player_id) + str('/').
-#     # Only for future
-#     # url_team = "https://fantasy.premierleague.com/api/entry/" + team_id + "/"   # + str(entry_id) my own team!
-#     # url_team_history = "https://fantasy.premierleague.com/api/entry/" + team_id + "/history/"
-#     # url_team_picks = "https://fantasy.premierleague.com/api/entry/" + team_id + "/event/" + gameweek + "/picks/"
-#     # url_team_transfers = "https://fantasy.premierleague.com/api/entry/" + team_id + "/transfers/"
-#     # url_fixtures = "https://fantasy.premierleague.com/api/fixtures/"    # all fixtures
+plt.plot(mtp)
+plt.plot(gwp)
+# plt.plot(mawp)
+# plt.plot(awp)
+plt.legend(['My Team', 'All Average Points, week-by-week'])#, 'My average', 'All Average Points'])
+plt.xlabel('Gameweek')
+plt.ylabel('Points')
+plt.show()

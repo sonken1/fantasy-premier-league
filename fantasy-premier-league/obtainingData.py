@@ -5,7 +5,7 @@ import csv
 import pandas
 
 
-def get_data(path, url, name_dump):
+def get_data(path, url, name_dump, save_data=True):
     """
     Retrieve fpl stats from url
     Save in path with name_dump
@@ -20,8 +20,9 @@ def get_data(path, url, name_dump):
         raise Exception("Response was code " + str(response.status_code))
     response_text = response.text
     data = json.loads(response_text)
-    with open(path + name_dump + '.json', 'w') as out:
-        json.dump(data, out)
+    if save_data:
+        with open(path + name_dump + '.json', 'w') as out:
+            json.dump(data, out)
     return data
 
 
@@ -70,6 +71,10 @@ def clean_data(path, clean_path, headers_of_interest):
         for line in r:
             w.writerow(line)
     return clean_path
+
+# def average_points(my_id, gw_path):
+#
+#
 
 
 if __name__ == '__main__':
