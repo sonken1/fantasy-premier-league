@@ -143,26 +143,79 @@ class GatherData:
 
         headers, path = obtainingData.build_statistic_header(data, own_path + team_name + '/' + 'raw_my_team_history' + '.csv', 'current')
 
+def get_result_dataframe(file_path, season):
+    players_light = pd.read_csv(file_path)
 
-id = 3022773
-e = GatherData(id)
+    teams = []
+    for fname, lname, ident, team_id, team_id_this_season in zip(players_light['first_name'],
+                                                                 players_light['second_name'], players_light['id'],
+                                                                 players_light['team_code'], players_light['team']):
 
-# Dumb shiet
-my_team_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/my_team/Spurtastic/raw_my_team_history.csv')
-gw_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/gameweeks/cleaned_gameweeks.csv')
+        if not team_id in teams:
+            map_name = str(ident) + '_' + fname + '_' + lname + '\\' + 'cleaned_player_history.csv'
+            try:
+                path = 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\' + season + '\\players\\' + \
+                       map_name
+                gw_stats = pd.read_csv(path)
+                try:
+                    team_read = pd.read_csv('C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\' + season +
+                                            '\\teams\\cleaned_teams.csv')
+                    folder_name = str(team_id) + '_' + team_read[team_read['code'] == team_id]['name'].values[0]
+                    team_path = 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\' + season + '\\teams\\' + \
+                                folder_name
+                    os.makedirs(team_path)  # For teams
+                    teams.append(team_id)
 
-mtp = my_team_data['points']
-nbr_gw = len(mtp)
-gwp = gw_data['average_entry_score']
-maxgw = gw_data['highest_score']
-gwp = gwp[:nbr_gw]
-maxgw = maxgw[:nbr_gw]
-awp = [np.mean(gwp)]*nbr_gw
-mawp = [np.mean(mtp)]*nbr_gw
+                    home_goals = []
+                    home_team = []
+                    away_team = []
+                    away_goals = []
+                    dates = []
+                    for date, was_home, opponent, home_score, away_score in zip(gw_stats['kickoff_time'], gw_stats['was_home'], gw_stats['opponent_team'], gw_stats['team_h_score'], gw_stats['team_a_score']):
+                        if was_home:
+                            home_team.append(team_id_this_season)
+                            away_team.append(opponent)
+                        else:
+                            home_team.append(opponent)
+                            away_team.append(team_id_this_season)
+                        home_goals.append(home_score)
+                        away_goals.append(away_score)
+                        dates.append(date)
 
-plt.plot(mtp)
-plt.plot(gwp)
-plt.legend(['My Team', 'All Average Points, week-by-week'])
-plt.xlabel('Gameweek')
-plt.ylabel('Points')
-plt.show()
+                    # TODO: This needs to be fixed. We want to save the results as a dataframe, but something goes wrong
+                    # when i try this....
+                    df_past = pd.DataFrame(np.array([dates, home_team, away_team, home_goals, away_goals]), columns=["date", "home_team", "away_team", "home_goals", "away_goals"])
+                    print('')
+                except FileExistsError:
+                    pass
+            except FileNotFoundError:
+                pass
+
+
+
+
+test = get_result_dataframe('C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2019-20\\players\\cleaned_additional_players.csv', '2019-20')
+#
+# This below is the "real" program
+# id = 3022773
+# e = GatherData(id)
+#
+# # Dumb shiet
+# my_team_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/my_team/Spurtastic/raw_my_team_history.csv')
+# gw_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/gameweeks/cleaned_gameweeks.csv')
+#
+# mtp = my_team_data['points']
+# nbr_gw = len(mtp)
+# gwp = gw_data['average_entry_score']
+# maxgw = gw_data['highest_score']
+# gwp = gwp[:nbr_gw]
+# maxgw = maxgw[:nbr_gw]
+# awp = [np.mean(gwp)]*nbr_gw
+# mawp = [np.mean(mtp)]*nbr_gw
+#
+# plt.plot(mtp)
+# plt.plot(gwp)
+# plt.legend(['My Team', 'All Average Points, week-by-week'])
+# plt.xlabel('Gameweek')
+# plt.ylabel('Points')
+# plt.show()
