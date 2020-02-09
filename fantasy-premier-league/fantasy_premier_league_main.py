@@ -7,15 +7,14 @@ import time
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats import norm
 
 
 class GatherData:
 
-    def __init__(self, my_team_id):
+    def __init__(self):
 
         self.this_season = '2019-20'
-        self.my_team_id = str(my_team_id)
-        self.my_team_url = "https://fantasy.premierleague.com/api/entry/" + self.my_team_id + '/'
         self.base_path = str(pathlib.Path(__file__).parent.absolute()).replace('\\', '/') + '/'
         self.base_data_path = self.base_path + 'data/' + self.this_season + '/'
         self.base_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
@@ -53,6 +52,7 @@ class GatherData:
 
         # Call initial method, gather and process first data
         self.gather_and_update_data()
+
 
     def gather_and_update_data(self):
         # Set base paths
@@ -124,24 +124,31 @@ class GatherData:
                 pass
             counter += 1
 
-        print('\nNew Players added to premier league (has not played yet this season):')
-        for new_plp in new_players_added:
-            print(new_plp)
+        if new_players_added:
+            print('\nNew Players added to premier league (has not played yet this season):')
+            for new_plp in new_players_added:
+                print(new_plp)
 
         print('\nDownloading team data ...')
         # Gather the initial teams data, light version and minor processing.
         obtainingData.parse_data(teams_path, self.base_url, 'teams', self.team_headers, self.type_teams)
         #
+
+    def gather_specific_team_data(self, my_team_id):
+        own_path = self.base_data_path + 'my_team/'
+        my_team_url = "https://fantasy.premierleague.com/api/entry/" + str(my_team_id) + '/'
         print('\nDownloading your team data ...')
-        data = obtainingData.get_data(own_path, self.my_team_url, 'my_team', False)
+        data = obtainingData.get_data(own_path, my_team_url, 'my_team', False)
         team_name = data['name']
         try:
-            os.makedirs(own_path + team_name)    # For teams
+            os.makedirs(own_path + team_name)  # For teams
         except FileExistsError:
             pass
-        data = obtainingData.get_data(own_path + team_name + '/', self.my_team_url + 'history/', 'my_team_history')
+        data = obtainingData.get_data(own_path + team_name + '/', my_team_url + 'history/', 'my_team_history')
 
-        headers, path = obtainingData.build_statistic_header(data, own_path + team_name + '/' + 'raw_my_team_history' + '.csv', 'current')
+        headers, path = obtainingData.build_statistic_header(data, own_path + team_name + '/' + 'raw_my_team_history' +
+                                                             '.csv', 'current')
+
 
 def get_result_dataframe(file_path, season):
     players_light = pd.read_csv(file_path)
@@ -172,50 +179,55 @@ def get_result_dataframe(file_path, season):
                     away_goals = []
                     dates = []
                     for date, was_home, opponent, home_score, away_score in zip(gw_stats['kickoff_time'], gw_stats['was_home'], gw_stats['opponent_team'], gw_stats['team_h_score'], gw_stats['team_a_score']):
-                        if was_home:
-                            home_team.append(team_id_this_season)
-                            away_team.append(opponent)
-                        else:
-                            home_team.append(opponent)
-                            away_team.append(team_id_this_season)
-                        home_goals.append(home_score)
-                        away_goals.append(away_score)
-                        dates.append(date)
+                        if home_score != 'None':
+                            if was_home:
+                                home_team.append(team_id_this_season)
+                                away_team.append(opponent)
+                            else:
+                                home_team.append(opponent)
+                                away_team.append(team_id_this_season)
+                            home_goals.append(home_score)
+                            away_goals.append(away_score)
+                            dates.append(date)
 
                     # TODO: This needs to be fixed. We want to save the results as a dataframe, but something goes wrong
                     # when i try this....
-                    df_past = pd.DataFrame(np.array([dates, home_team, away_team, home_goals, away_goals]), columns=["date", "home_team", "away_team", "home_goals", "away_goals"])
-                    print('')
+                    df_past = pd.DataFrame(np.array([dates, home_team, away_team, home_goals, away_goals], ).transpose(), columns=["date", "home_team", "away_team", "home_goals", "away_goals"])
+                    df_past["home_goals"] = df_past["home_goals"].astype(int)
+                    df_past["away_goals"] = df_past["away_goals"].astype(int)
+                    df_past["date"] = pd.to_datetime(df_past["date"])
+                    print('Created Folder:', folder_name)
+                    df_past.to_csv(team_path + '\\team_history.csv', index=None, header=True)
                 except FileExistsError:
                     pass
             except FileNotFoundError:
                 pass
 
 
+def calculate_home_advantage(file_path, team_code):
+    team_id = players_calculations.map_team_code_to_id(team_code)
+    team_df = pd.read_csv(file_path)
+    home_df = team_df[team_df['home_team'] == team_id]
+    scored = home_df['home_goals'].values
+    conceded = home_df['away_goals'].values
+    mean_scored, std_scored = norm.fit(scored, loc=0, scale=1)
+    mean_conceded, std_conceded = norm.fit(conceded, loc=0, scale=1)
+    print(np.std(scored))
+    plt.hist(scored)
+    plt.hist(conceded)
+    plt.legend(["Density, scored", "Density, conceded"])
+    plt.title(str(players_calculations.map_team_code_to_name(team_code)) + ' at home')
+    plt.show()
 
 
-test = get_result_dataframe('C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2019-20\\players\\cleaned_additional_players.csv', '2019-20')
-#
-# This below is the "real" program
-# id = 3022773
-# e = GatherData(id)
-#
-# # Dumb shiet
-# my_team_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/my_team/Spurtastic/raw_my_team_history.csv')
-# gw_data = pd.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/gameweeks/cleaned_gameweeks.csv')
-#
-# mtp = my_team_data['points']
-# nbr_gw = len(mtp)
-# gwp = gw_data['average_entry_score']
-# maxgw = gw_data['highest_score']
-# gwp = gwp[:nbr_gw]
-# maxgw = maxgw[:nbr_gw]
-# awp = [np.mean(gwp)]*nbr_gw
-# mawp = [np.mean(mtp)]*nbr_gw
-#
-# plt.plot(mtp)
-# plt.plot(gwp)
-# plt.legend(['My Team', 'All Average Points, week-by-week'])
-# plt.xlabel('Gameweek')
-# plt.ylabel('Points')
-# plt.show()
+
+if __name__ == "__main__":
+    calculate_home_advantage('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/teams/14_Liverpool/team_history.csv', 14)
+    # test = GatherData()
+    # test.gather_specific_team_data(3022773)
+
+
+id_elias = 3022773
+id_josef = 3959938
+id_max = 3321209
+id_rickard = 3553907

@@ -6,8 +6,16 @@ def map_team_code_to_name(team_code):
     """
     Maps team_code from player data to team names (for visualisation)
     """
-    df_teams = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_teams.csv')
+    df_teams = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/teams/cleaned_teams.csv')
     return df_teams[df_teams['code'] == team_code]['name'].values[0]
+
+
+def map_team_code_to_id(team_code):
+    """
+    Maps team_code from player data to season id
+    """
+    df_teams = pandas.read_csv('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/teams/cleaned_teams.csv')
+    return df_teams[df_teams['code'] == team_code]['id'].values[0]
 
 
 def add_player_information(data_path):
@@ -25,7 +33,7 @@ def add_player_information(data_path):
 
 def sort_top_players(data_path, by_type, number_of_top=10, limit=None, limit_type=None, ascending_sort=False):
     """
-    Sorts players based on category=by_type
+    Sorts players based on category (=by_type), with limits according to limit of type limit_type
     """
     dataframe = pandas.read_csv(data_path)
 
@@ -53,8 +61,8 @@ def expeted_points(player_id, data_path):
 
 
 if __name__ == '__main__':
-    path = 'C:/Users/elias/mainFolder/fantasy-premier-league/data/cleaned_players.csv'
-    new_headers, new_path = add_player_information(path)
+    path = 'C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/players/cleaned_players.csv'
+    new_path = add_player_information(path)
     efficient = sort_top_players(new_path, 'points_per_minute', 10, 300, 'minutes')
     price = sort_top_players(new_path, 'points_per_million')
     inflation = sort_top_players(new_path, 'cost_change_start')
@@ -65,9 +73,9 @@ if __name__ == '__main__':
     print(price)
     print("Most efficient players (top 10):")
     print(efficient)
-    print("Most inflation players (top 10):")
+    print("Most inflation, players (top 10):")
     print(inflation)
-    print("Least inflation players (top 10):")
+    print("Least inflation, players (top 10):")
     print(neg_inflation)
     print("Best players by BPS (top 10):")
     print(bonus_point_system)
