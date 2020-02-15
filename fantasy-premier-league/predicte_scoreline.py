@@ -50,28 +50,41 @@ def poisson_matrix(p_home, p_away):
 
     return matrix, max_prob, max_index
 
-file_path = 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2018-19\\results\\season-1819_csv.csv'
-headers = ['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG']
-season_frame = pd.read_csv(file_path)
-season_frame = season_frame[headers]
-home_goals = season_frame['FTHG'].sum()
-away_goals = season_frame['FTAG'].sum()
-N = season_frame.shape[0]
-mu_home_scored = home_goals/N
-mu_home_conceded = away_goals/N
-mu_away_scored = mu_home_conceded
-mu_away_conceded = mu_home_scored
-print('-----------STATS 2018/19:-----------\nHome Goals:', home_goals, 'Avergae Home Goals:', mu_home_scored,
-      '\nAway Goals: ', away_goals, 'Avergae Away Goals:', mu_away_scored)
 
-s_home_a, s_home_d, s_away_a, s_away_d = calculate_team_strength(season_frame, 'Tottenham', mu_home_scored, mu_away_scored)
-e_home_a, e_home_d, e_away_a, e_away_d = calculate_team_strength(season_frame, 'Everton', mu_home_scored, mu_away_scored)
-print('Spurs Home Strength (Attack):', s_home_a, '\nSpurs Home Strength (Defence):', s_home_d, '\nSpurs Away Strength (Attack):', s_away_a, '\nSpurs Away Strength (Defence):', s_away_d,
-      '\nEverton Home Strength (Attack):', e_home_a, '\nEverton Home Strength (Defence):', e_home_d, '\nEverton Away Strength (Attack):', e_away_a, '\nEverton Away Strength (Defence):', e_away_d)
 
-mu_home = s_home_a*e_away_d*mu_home_scored #Home team attack strength * Away team defence strength * average number of home goals
-mu_away = e_away_a*s_home_d*mu_away_scored#Away team attack strength * home team defence strength * average number of away goals
+base_path = 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\'
+end_path = '\\results\\results.csv'
+this_season = '2019-20'
+last_season = '2018-19'
+current_season_frame = pd.read_csv(base_path+this_season+end_path)
+passed_season_frame = pd.read_csv(base_path+last_season+end_path)
+merged_frame = pd.concat([passed_season_frame, current_season_frame])
+gameweeks_of_interest = 38
+merged_frame = merged_frame[38:]
+print('')
 
-probability_matrix, max_prob, max_ind = poisson_matrix(poisson_distribution(mu_home), poisson_distribution(mu_away))
-print(probability_matrix)
-print('Probable Score: ' + str(max_ind[0]) + ' - ' + str(max_ind[1]))
+# file_path = 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2018-19\\results\\season-1819_csv.csv'
+# headers = ['Date', 'HomeTeam', 'AwayTeam', 'FTHG', 'FTAG']
+# season_frame = pd.read_csv(file_path)
+# season_frame = season_frame[headers]
+# home_goals = season_frame['FTHG'].sum()
+# away_goals = season_frame['FTAG'].sum()
+# N = season_frame.shape[0]
+# mu_home_scored = home_goals/N
+# mu_home_conceded = away_goals/N
+# mu_away_scored = mu_home_conceded
+# mu_away_conceded = mu_home_scored
+# print('-----------STATS 2018/19:-----------\nHome Goals:', home_goals, 'Avergae Home Goals:', mu_home_scored,
+#       '\nAway Goals: ', away_goals, 'Avergae Away Goals:', mu_away_scored)
+#
+# s_home_a, s_home_d, s_away_a, s_away_d = calculate_team_strength(season_frame, 'Tottenham', mu_home_scored, mu_away_scored)
+# e_home_a, e_home_d, e_away_a, e_away_d = calculate_team_strength(season_frame, 'Everton', mu_home_scored, mu_away_scored)
+# print('Spurs Home Strength (Attack):', s_home_a, '\nSpurs Home Strength (Defence):', s_home_d, '\nSpurs Away Strength (Attack):', s_away_a, '\nSpurs Away Strength (Defence):', s_away_d,
+#       '\nEverton Home Strength (Attack):', e_home_a, '\nEverton Home Strength (Defence):', e_home_d, '\nEverton Away Strength (Attack):', e_away_a, '\nEverton Away Strength (Defence):', e_away_d)
+#
+# mu_home = s_home_a*e_away_d*mu_home_scored #Home team attack strength * Away team defence strength * average number of home goals
+# mu_away = e_away_a*s_home_d*mu_away_scored#Away team attack strength * home team defence strength * average number of away goals
+#
+# probability_matrix, max_prob, max_ind = poisson_matrix(poisson_distribution(mu_home), poisson_distribution(mu_away))
+# print(probability_matrix)
+# print('Probable Score: ' + str(max_ind[0]) + ' - ' + str(max_ind[1]))
