@@ -106,7 +106,7 @@ class GatherData:
             sys.stdout.flush()
 
             # Name of folder to create
-            map_name = str(ident) + '_' + fname + '_' + lname + '/'
+            map_name = str(ident) + '/'
 
             # Create individual player's directory if not already existing
             try:
@@ -220,14 +220,70 @@ def calculate_home_advantage(file_path, team_code):
     plt.show()
 
 
+def player_picks(id, gws):
+    """
+    id: team_id
+    gws: list of gws
+    """
+    data = []
+    players_path = 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2019-20\\players\\'
+    for gw in gws:
+        url = 'https://fantasy.premierleague.com/api/entry/' + str(id) + '/event/' + str(gw) + '/picks/'
+        gw_picks = obtainingData.get_data('path', url, 'name_dump', save_data=True)
+        for entry in gw_picks['picks']:
+            player = pd.read_csv(players_path + str(entry['element']) + '\\cleaned_player_history.csv')
+            try:
+                player_points = player[player['round'] == gw]['total_points'].values[0]
+            except IndexError:
+                player_points = 0
+            entry.update({'player_points': int(player_points)})
+
+        max_player_points = max(gw_picks['picks'], key=lambda x:x['player_points'])['player_points']
+        gw_captain = max(gw_picks['picks'], key=lambda x:x['is_captain'])['player_points']
+        gw_vice = max(gw_picks['picks'], key=lambda x: x['is_vice'])['player_points']
+        data.append({'gw': gw, 'Captain points': gw_captain, 'Vice Points': gw_vice, 'Player Max': max_player_points,
+                     'Lost Points': max_player_points - gw_captain})
+    return data
+
 
 if __name__ == "__main__":
-    calculate_home_advantage('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/teams/14_Liverpool/team_history.csv', 14)
-    # test = GatherData()
-    # test.gather_specific_team_data(3022773)
+    import pandas as pd
+    id_elias = 3022773
+    id_josef = 3959938
+    id_max = 3321209
+    id_rickard = 3553907
+    name_elias = 'Spurtastic\\'
+    name_josef = 'Locos Lobos\\'
+    name_max = 'Snäppetörps FK\\'
+    name_rickard = 'Goolaazoo\\'
+    captain_picks = player_picks(id_elias, [i for i in range(1, 27)])
+    lost_points_total_elias = 0
+    for entry in captain_picks:
+        lost_points_total_elias += entry['Lost Points']
+    captain_picks = player_picks(id_josef, [i for i in range(1, 27)])
+    lost_points_total_josef = 0
+    for entry in captain_picks:
+        lost_points_total_josef += entry['Lost Points']
+    captain_picks = player_picks(id_max, [i for i in range(1, 27)])
+    lost_points_total_max = 0
+    for entry in captain_picks:
+        lost_points_total_max += entry['Lost Points']
+    captain_picks = player_picks(id_rickard, [i for i in range(1, 27)])
+    lost_points_total_rickard = 0
+    for entry in captain_picks:
+        lost_points_total_rickard += entry['Lost Points']
+    print('Elias:', lost_points_total_elias, '\nJosef:', lost_points_total_josef, '\nMax:', lost_points_total_max,
+          '\nRickard:', lost_points_total_rickard)
 
 
-id_elias = 3022773
-id_josef = 3959938
-id_max = 3321209
-id_rickard = 3553907
+
+
+    #calculate_home_advantage('C:/Users/elias/mainFolder/fantasy-premier-league/data/2019-20/teams/14_Liverpool/team_history.csv', 14)
+    base_path = 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2019-20\\my_team\\'
+    end_path = 'raw_my_team_history.csv'
+    elias = pd.read_csv(base_path + name_elias + end_path)
+    josef = pd.read_csv(base_path + name_josef + end_path)
+    Max = pd.read_csv(base_path + name_max + end_path)
+    rickard = pd.read_csv(base_path + name_rickard + end_path)
+
+

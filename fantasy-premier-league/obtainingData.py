@@ -72,11 +72,14 @@ def clean_data(path, clean_path, headers_of_interest):
             w.writerow(line)
     return clean_path
 
-def get_results_data(season, path):
+def get_results_data(season, path, premier_league=True):
     """
     Season should be defined as 1819, 1920 etc.
     """
-    url = 'https://www.football-data.co.uk/mmz4281/' + str(season) + '/E0.csv'
+    if premier_league:
+        url = 'https://www.football-data.co.uk/mmz4281/' + str(season) + '/E0.csv'
+    else:
+        url = 'https://www.football-data.co.uk/mmz4281/' + str(season) + '/E1.csv'
     response = ''
     while response == '':
         try:
@@ -106,6 +109,7 @@ if __name__ == '__main__':
     pd = pandas.read_csv('C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2018-19\\results\\results.csv')
     get_results_data(1920, 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2019-20\\results\\')
     pd = pandas.read_csv('C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2019-20\\results\\results.csv')
+    get_results_data(1819, 'C:\\Users\\elias\\mainFolder\\fantasy-premier-league\\data\\2018-19\\results\\')
     # team_id = "3022773"
     # gameweek = "1"
     # url_all_players = "https://fantasy.premierleague.com/api/bootstrap-static/"

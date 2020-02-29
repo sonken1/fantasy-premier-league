@@ -23,17 +23,17 @@ average_entry_score,chip_plays,data_checked,deadline_time,deadline_time_epoch,de
 57,"[{'chip_name': 'bboost', 'num_played': 60234}, {'chip_name': 'freehit', 'num_played': 25772}, {'chip_name': 'wildcard', 'num_played': 221359}, {'chip_name': '3xc', 'num_played': 35645}]",True,2020-01-10T19:00:00Z,1578682800,0,True,139,6875573,22,False,False,False,166,215,313,215,Gameweek 22,210,"{'id': 210, 'points': 20}",7181120
 44,"[{'chip_name': 'bboost', 'num_played': 52590}, {'chip_name': 'freehit', 'num_played': 36077}, {'chip_name': 'wildcard', 'num_played': 212815}, {'chip_name': '3xc', 'num_played': 42864}]",True,2020-01-18T11:30:00Z,1579347000,0,True,119,3957614,23,False,False,False,215,215,313,215,Gameweek 23,183,"{'id': 183, 'points': 15}",7048347
 53,"[{'chip_name': 'bboost', 'num_played': 49840}, {'chip_name': 'freehit', 'num_played': 118123}, {'chip_name': 'wildcard', 'num_played': 232975}, {'chip_name': '3xc', 'num_played': 625930}]",True,2020-01-21T18:30:00Z,1579631400,0,True,137,6390975,24,False,False,False,192,215,187,215,Gameweek 24,198,"{'id': 198, 'points': 16}",7299180
-47,"[{'chip_name': 'bboost', 'num_played': 55227}, {'chip_name': 'freehit', 'num_played': 45699}, {'chip_name': 'wildcard', 'num_played': 290870}, {'chip_name': '3xc', 'num_played': 35765}]",True,2020-02-01T11:30:00Z,1580556600,0,True,119,1118939,25,False,False,True,191,215,191,215,Gameweek 25,393,"{'id': 393, 'points': 18}",8244319
-4,"[{'chip_name': 'bboost', 'num_played': 47253}, {'chip_name': 'freehit', 'num_played': 26822}, {'chip_name': 'wildcard', 'num_played': 164665}, {'chip_name': '3xc', 'num_played': 49189}]",False,2020-02-08T11:30:00Z,1581161400,0,False,78,7405934,26,True,False,False,191,215,191,215,Gameweek 26,150,"{'id': 150, 'points': 13}",5386242
-0,[],False,2020-02-22T11:30:00Z,1582371000,0,False,None,None,27,False,True,False,None,None,None,None,Gameweek 27,None,None,0
-0,[],False,2020-02-28T19:00:00Z,1582916400,0,False,None,None,28,False,False,False,None,None,None,None,Gameweek 28,None,None,0
+47,"[{'chip_name': 'bboost', 'num_played': 55227}, {'chip_name': 'freehit', 'num_played': 45699}, {'chip_name': 'wildcard', 'num_played': 290870}, {'chip_name': '3xc', 'num_played': 35765}]",True,2020-02-01T11:30:00Z,1580556600,0,True,119,1118939,25,False,False,False,191,215,191,215,Gameweek 25,393,"{'id': 393, 'points': 18}",8244319
+56,"[{'chip_name': 'bboost', 'num_played': 47253}, {'chip_name': 'freehit', 'num_played': 26822}, {'chip_name': 'wildcard', 'num_played': 164665}, {'chip_name': '3xc', 'num_played': 49189}]",True,2020-02-08T11:30:00Z,1581161400,0,True,127,1061667,26,False,False,True,191,215,191,215,Gameweek 26,488,"{'id': 488, 'points': 17}",5386242
+14,"[{'chip_name': 'bboost', 'num_played': 61314}, {'chip_name': 'freehit', 'num_played': 23745}, {'chip_name': 'wildcard', 'num_played': 125942}, {'chip_name': '3xc', 'num_played': 42108}]",False,2020-02-22T11:30:00Z,1582371000,0,False,79,880788,27,True,False,False,191,215,409,215,Gameweek 27,123,"{'id': 123, 'points': 15}",5503304
+0,[],False,2020-02-28T19:00:00Z,1582916400,0,False,None,None,28,False,True,False,None,None,None,None,Gameweek 28,None,None,0
 0,[],False,2020-03-07T11:30:00Z,1583580600,0,False,None,None,29,False,False,False,None,None,None,None,Gameweek 29,None,None,0
 0,[],False,2020-03-14T11:30:00Z,1584185400,0,False,None,None,30,False,False,False,None,None,None,None,Gameweek 30,None,None,0
 0,[],False,2020-03-20T19:00:00Z,1584730800,0,False,None,None,31,False,False,False,None,None,None,None,Gameweek 31,None,None,0
-0,[],False,2020-04-04T13:00:00Z,1586005200,0,False,None,None,32,False,False,False,None,None,None,None,Gameweek 32,None,None,0
-0,[],False,2020-04-11T13:00:00Z,1586610000,0,False,None,None,33,False,False,False,None,None,None,None,Gameweek 33,None,None,0
-0,[],False,2020-04-18T13:00:00Z,1587214800,0,False,None,None,34,False,False,False,None,None,None,None,Gameweek 34,None,None,0
-0,[],False,2020-04-25T13:00:00Z,1587819600,0,False,None,None,35,False,False,False,None,None,None,None,Gameweek 35,None,None,0
+0,[],False,2020-04-04T10:30:00Z,1585996200,0,False,None,None,32,False,False,False,None,None,None,None,Gameweek 32,None,None,0
+0,[],False,2020-04-11T10:30:00Z,1586601000,0,False,None,None,33,False,False,False,None,None,None,None,Gameweek 33,None,None,0
+0,[],False,2020-04-18T10:30:00Z,1587205800,0,False,None,None,34,False,False,False,None,None,None,None,Gameweek 34,None,None,0
+0,[],False,2020-04-25T10:30:00Z,1587810600,0,False,None,None,35,False,False,False,None,None,None,None,Gameweek 35,None,None,0
 0,[],False,2020-05-02T13:00:00Z,1588424400,0,False,None,None,36,False,False,False,None,None,None,None,Gameweek 36,None,None,0
 0,[],False,2020-05-09T13:00:00Z,1589029200,0,False,None,None,37,False,False,False,None,None,None,None,Gameweek 37,None,None,0
 0,[],False,2020-05-17T13:00:00Z,1589720400,0,False,None,None,38,False,False,False,None,None,None,None,Gameweek 38,None,None,0
